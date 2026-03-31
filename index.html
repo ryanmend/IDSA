@@ -1,317 +1,335 @@
-﻿<!DOCTYPE html>
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome file</title>
-  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+  <title>IoT Device Security Assessment</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+<body>
 
-<body class="stackedit">
-  <div class="stackedit__html"><h1 id="iot-device-security-assessment">IoT Device Security Assessment</h1>
-<p>This IoT Device Security Assessment project presents the design and development aimed at evaluating the security posture of consumer Internet of Things (IoT) devices across network, application, and firmware layers. Motivated by the rapid expansion of IoT ecosystems and the corresponding rise in security risks, the project applies an evidence-driven methodology inspired by industry standards such as the OWASP IoT Top 10 and NIST guidelines. The assessment framework guides the structured analysis of device behaviour, cloud interactions, and internal software components, ultimately enabling a comprehensive understanding of vulnerabilities and their implications.</p>
-<p><img src="src/img/component_overview.png" alt="Component Overview"></p>
-<h2 id="table-of-contents">Table of Contents</h2>
-<ol>
-<li>
-<p><a href="./src/01_introduction/README.md"><strong>Introduction</strong></a></p>
-</li>
-<li>
-<p><a href="./src/02_framework/README.md"><strong>IoT Security Testing Framework</strong></a></p>
-<p>2.1. <a href="./src/02_framework/device_model.md">IoT Device Model</a></p>
-<p>2.2. <a href="./src/02_framework/threat_model.md">Threat Model</a></p>
-<p>2.3. <a href="./src/02_framework/methodology.md">Testing Methodology</a></p>
-</li>
-<li>
-<p><a href="./src/03_test_cases/README.md"><strong>Test Case Catalog</strong></a></p>
-<p>3.1. <a href="./src/03_test_cases/firmware/README.md">Firmware (IDSA-FW)</a></p>
-<p>3.2. <a href="./src/03_test_cases/network_data_services/README.md">Network Data Services (IDSA-NET)</a></p>
-<p>3.3. <a href="./src/03_test_cases/api_&amp;_cloud_integration/README.md">API &amp; Cloud Integration (IDSA-API)</a></p>
-<p>3.4. <a href="./src/03_test_cases/physical_interfaces/README.md">Physical Interfaces (IDSA-PHYS)</a></p>
-<p>3.5. <a href="./src/03_test_cases/wireless_interfaces/README.md">Wireless Interfaces (IDSA-RF)</a></p>
-<p>3.6. <a href="./src/03_test_cases/os_&amp;_user_interfaces/README.md">Operating System &amp; UI (IDSA-OS)</a></p>
-</li>
-</ol>
-<h1 id="testing-checklist">Testing Checklist</h1>
-<p>The following is the list of items to test during the assessment:</p>
-<p>Note: The <code>Status</code> column can be set for values similar to “Pass”, “Fail”, “N/A”.</p>
-<h2 id="firmware-idsa-fw">3.1 Firmware (IDSA-FW)</h2>
+  <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Sidebar">☰ Menu</button>
 
-<table>
-<thead>
-<tr>
-<th>Test ID</th>
-<th>Test Name</th>
-<th>Status</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>IDSA-FW-INFO</strong></td>
-<td><strong>Information Gathering</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>IDSA-FW-INFO-001</td>
-<td>Disclosure of Source Code and Binaries</td>
-<td></td>
-<td>Analyze Blink updates via App; Use binwalk on RPi filesystem/EEPROM.</td>
-</tr>
-<tr>
-<td>IDSA-FW-INFO-002</td>
-<td>Disclosure of Implementation Details</td>
-<td></td>
-<td>Check for exposed hardware specs or boot logs.</td>
-</tr>
-<tr>
-<td><strong>IDSA-FW-CONF</strong></td>
-<td><strong>Configuration and Patch Management</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>IDSA-FW-CONF-001</td>
-<td>Usage of Outdated Software</td>
-<td></td>
-<td>Check apt packages on RPi; Verify Blink firmware version in-app.</td>
-</tr>
-<tr>
-<td>IDSA-FW-CONF-002</td>
-<td>Update Mechanism Security</td>
-<td></td>
-<td>Test Blink app-based updates vs. RPi sudo apt full-upgrade security</td>
-</tr>
-<tr>
-<td><strong>IDSA-FW-SCRT</strong></td>
-<td><strong>Secrets</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>IDSA-FW-SCRT-001</td>
-<td>Secrets Stored in Public Storage</td>
-<td></td>
-<td>Search for hardcoded keys in binwalk extracted files.</td>
-</tr>
-<tr>
-<td>IDSA-FW-SCRT-002</td>
-<td>Unencrypted Storage of Secrets</td>
-<td></td>
-<td>Check /etc/ or config files on RPi; Check local cache for Blink.</td>
-</tr>
-</tbody>
-</table><h2 id="network-data-services-idsa-net">3.2 Network Data Services (IDSA-NET)</h2>
+  <nav id="sidebar" class="sidebar">
+    <h2>Table of Contents</h2>
+    <ol>
+      <li>
+        <a href="./src/01_introduction/README.md"><strong>Introduction</strong></a>
+      </li>
+      <li>
+        <a href="./src/02_framework/README.md"><strong>IoT Security Testing Framework</strong></a>
+        <ul>
+          <li><a href="./src/02_framework/device_model.md">2.1. IoT Device Model</a></li>
+          <li><a href="./src/02_framework/threat_model.md">2.2. Threat Model</a></li>
+          <li><a href="./src/02_framework/methodology.md">2.3. Testing Methodology</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="./src/03_test_cases/README.md"><strong>Test Case Catalog</strong></a>
+        <ul>
+          <li><a href="./src/03_test_cases/firmware/README.md">3.1. Firmware (IDSA-FW)</a></li>
+          <li><a href="./src/03_test_cases/network_data_services/README.md">3.2. Network Data Services (IDSA-NET)</a></li>
+          <li><a href="./src/03_test_cases/api_&_cloud_integration/README.md">3.3. API &amp; Cloud Integration (IDSA-API)</a></li>
+          <li><a href="./src/03_test_cases/physical_interfaces/README.md">3.4. Physical Interfaces (IDSA-PHYS)</a></li>
+          <li><a href="./src/03_test_cases/wireless_interfaces/README.md">3.5. Wireless Interfaces (IDSA-RF)</a></li>
+          <li><a href="./src/03_test_cases/os_&_user_interfaces/README.md">3.6. Operating System &amp; UI (IDSA-OS)</a></li>
+        </ul>
+      </li>
+    </ol>
+  </nav>
 
-<table>
-<thead>
-<tr>
-<th>Test ID</th>
-<th>Test Name</th>
-<th>Status</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>IDSA-NET-SCAN</strong></td>
-<td><strong>Service Discovery</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>IDSA-NET-SCAN-001</td>
-<td>Open Port &amp; Service Enumeration</td>
-<td></td>
-<td>Use nmap to identify listening ports, service versions, and OS fingerprints.</td>
-</tr>
-<tr>
-<td>IDSA-NET-SCAN-002</td>
-<td>Vulnerability Scanning (NSE)</td>
-<td></td>
-<td>Use nmap scripting engine (NSE) to check for known CVEs on open services.</td>
-</tr>
-<tr>
-<td><strong>IDSA-NET-STRM</strong></td>
-<td><strong>Stream Encryption</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>IDSA-NET-STRM-001</td>
-<td>Encrypted Media Streaming</td>
-<td></td>
-<td>Use Wireshark to verify if Blink/RPi (WebRTC) streams are encrypted.</td>
-</tr>
-<tr>
-<td>IDSA-NET-STRM-002</td>
-<td>LAN Data Transmission</td>
-<td></td>
-<td>Monitor Wi-Fi traffic for unencrypted PII or command packets. <strong>Convert captured packets to images using Foremost.</strong></td>
-</tr>
-<tr>
-<td><strong>IDSA-NET-AUTH</strong></td>
-<td><strong>Authentication Security</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>IDSA-NET-AUTH-001</td>
-<td>Brute Force / Rainbow Table</td>
-<td></td>
-<td>Test Blink App login and RPi SSH/Local login for rate limiting.</td>
-</tr>
-<tr>
-<td>IDSA-NET-AUTH-002</td>
-<td>Phishing &amp; Session Hijacking</td>
-<td></td>
-<td>Evaluate Blink UI for credential harvesting risks.</td>
-</tr>
-</tbody>
-</table><h2 id="api--cloud-integration-idsa-api">3.3 API &amp; Cloud Integration (IDSA-API)</h2>
+  <main class="content">
+    <h1 id="iot-device-security-assessment">IoT Device Security Assessment</h1>
+    <p>This IoT Device Security Assessment project presents the design and development aimed at evaluating the security posture of consumer Internet of Things (IoT) devices across network, application, and firmware layers. Motivated by the rapid expansion of IoT ecosystems and the corresponding rise in security risks, the project applies an evidence-driven methodology inspired by industry standards such as the OWASP IoT Top 10 and NIST guidelines. The assessment framework guides the structured analysis of device behaviour, cloud interactions, and internal software components, ultimately enabling a comprehensive understanding of vulnerabilities and their implications.</p>
+    <p><img src="src/img/component_overview.png" alt="Component Overview"></p>
+    
+    <h1 id="testing-checklist">Testing Checklist</h1>
+    <p>The following is the list of items to test during the assessment:</p>
+    <p>Note: The <code>Status</code> column can be set for values similar to "Pass", "Fail", "N/A".</p>
+    
+    <h2 id="firmware-idsa-fw">3.1 Firmware (IDSA-FW)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Test ID</th>
+          <th>Test Name</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>IDSA-FW-INFO</strong></td>
+          <td><strong>Information Gathering</strong></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>IDSA-FW-INFO-001</td>
+          <td>Disclosure of Source Code and Binaries</td>
+          <td></td>
+          <td>Analyze Blink updates via App; Use binwalk on RPi filesystem/EEPROM.</td>
+        </tr>
+        <tr>
+          <td>IDSA-FW-INFO-002</td>
+          <td>Disclosure of Implementation Details</td>
+          <td></td>
+          <td>Check for exposed hardware specs or boot logs.</td>
+        </tr>
+        <tr>
+          <td><strong>IDSA-FW-CONF</strong></td>
+          <td><strong>Configuration and Patch Management</strong></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>IDSA-FW-CONF-001</td>
+          <td>Usage of Outdated Software</td>
+          <td></td>
+          <td>Check apt packages on RPi; Verify Blink firmware version in-app.</td>
+        </tr>
+        <tr>
+          <td>IDSA-FW-CONF-002</td>
+          <td>Update Mechanism Security</td>
+          <td></td>
+          <td>Test Blink app-based updates vs. RPi sudo apt full-upgrade security</td>
+        </tr>
+        <tr>
+          <td><strong>IDSA-FW-SCRT</strong></td>
+          <td><strong>Secrets</strong></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>IDSA-FW-SCRT-001</td>
+          <td>Secrets Stored in Public Storage</td>
+          <td></td>
+          <td>Search for hardcoded keys in binwalk extracted files.</td>
+        </tr>
+        <tr>
+          <td>IDSA-FW-SCRT-002</td>
+          <td>Unencrypted Storage of Secrets</td>
+          <td></td>
+          <td>Check /etc/ or config files on RPi; Check local cache for Blink.</td>
+        </tr>
+      </tbody>
+    </table>
 
-<table>
-<thead>
-<tr>
-<th>Test ID</th>
-<th>Test Name</th>
-<th>Status</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>IDSA-API-001</td>
-<td>Insecure Cloud Endpoints</td>
-<td></td>
-<td>Intercept Blink App-to-Cloud API calls (Burp Suite).</td>
-</tr>
-<tr>
-<td>IDSA-API-002</td>
-<td>Broken Object Level Auth (BOLA)</td>
-<td></td>
-<td>Can one user access another’s stream by changing a Device ID?</td>
-</tr>
-</tbody>
-</table><h2 id="physical-interfaces-idsa-phys">3.4 Physical Interfaces (IDSA-PHYS)</h2>
+    <h2 id="network-data-services-idsa-net">3.2 Network Data Services (IDSA-NET)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Test ID</th>
+          <th>Test Name</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>IDSA-NET-SCAN</strong></td>
+          <td><strong>Service Discovery</strong></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>IDSA-NET-SCAN-001</td>
+          <td>Open Port &amp; Service Enumeration</td>
+          <td></td>
+          <td>Use nmap to identify listening ports, service versions, and OS fingerprints.</td>
+        </tr>
+        <tr>
+          <td>IDSA-NET-SCAN-002</td>
+          <td>Vulnerability Scanning (NSE)</td>
+          <td></td>
+          <td>Use nmap scripting engine (NSE) to check for known CVEs on open services.</td>
+        </tr>
+        <tr>
+          <td><strong>IDSA-NET-STRM</strong></td>
+          <td><strong>Stream Encryption</strong></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>IDSA-NET-STRM-001</td>
+          <td>Encrypted Media Streaming</td>
+          <td></td>
+          <td>Use Wireshark to verify if Blink/RPi (WebRTC) streams are encrypted.</td>
+        </tr>
+        <tr>
+          <td>IDSA-NET-STRM-002</td>
+          <td>LAN Data Transmission</td>
+          <td></td>
+          <td>Monitor Wi-Fi traffic for unencrypted PII or command packets. <strong>Convert captured packets to images using Foremost.</strong></td>
+        </tr>
+        <tr>
+          <td><strong>IDSA-NET-AUTH</strong></td>
+          <td><strong>Authentication Security</strong></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>IDSA-NET-AUTH-001</td>
+          <td>Brute Force / Rainbow Table</td>
+          <td></td>
+          <td>Test Blink App login and RPi SSH/Local login for rate limiting.</td>
+        </tr>
+        <tr>
+          <td>IDSA-NET-AUTH-002</td>
+          <td>Phishing &amp; Session Hijacking</td>
+          <td></td>
+          <td>Evaluate Blink UI for credential harvesting risks.</td>
+        </tr>
+      </tbody>
+    </table>
 
-<table>
-<thead>
-<tr>
-<th>Test ID</th>
-<th>Test Name</th>
-<th>Status</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>IDSA-PHYS-001</td>
-<td>USB Host Detection (Win/Lin/Mac)</td>
-<td></td>
-<td>Does it mount as a camera/webcam or a storage device?</td>
-</tr>
-<tr>
-<td>IDSA-PHYS-002</td>
-<td>Unauthorized Peripheral Access</td>
-<td></td>
-<td>Does plugging it in provide a serial shell or unintended file access?</td>
-</tr>
-<tr>
-<td>IDSA-PHYS-003</td>
-<td>HID Attack Surface</td>
-<td></td>
-<td>Can the device be spoofed to act as a keyboard when plugged in?</td>
-</tr>
-</tbody>
-</table><h2 id="wireless-interfaces-idsa-rf">3.5 Wireless Interfaces (IDSA-RF)</h2>
+    <h2 id="api--cloud-integration-idsa-api">3.3 API &amp; Cloud Integration (IDSA-API)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Test ID</th>
+          <th>Test Name</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>IDSA-API-001</td>
+          <td>Insecure Cloud Endpoints</td>
+          <td></td>
+          <td>Intercept Blink App-to-Cloud API calls (Burp Suite).</td>
+        </tr>
+        <tr>
+          <td>IDSA-API-002</td>
+          <td>Broken Object Level Auth (BOLA)</td>
+          <td></td>
+          <td>Can one user access another’s stream by changing a Device ID?</td>
+        </tr>
+      </tbody>
+    </table>
 
-<table>
-<thead>
-<tr>
-<th>Test ID</th>
-<th>Test Name</th>
-<th>Status</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>IDSA-RF-001</td>
-<td>Protocol Analysis (Wireshark)</td>
-<td></td>
-<td>Verify WPA2/3 implementation and handshake security.</td>
-</tr>
-<tr>
-<td>IDSA-RF-002</td>
-<td>De-authentication Sensitivity</td>
-<td></td>
-<td>Does the camera stop recording/fail insecurely during a Wi-Fi jam?</td>
-</tr>
-</tbody>
-</table><h2 id="operating-system--ui-idsa-os">3.6 Operating System &amp; UI (IDSA-OS)</h2>
+    <h2 id="physical-interfaces-idsa-phys">3.4 Physical Interfaces (IDSA-PHYS)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Test ID</th>
+          <th>Test Name</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>IDSA-PHYS-001</td>
+          <td>USB Host Detection (Win/Lin/Mac)</td>
+          <td></td>
+          <td>Does it mount as a camera/webcam or a storage device?</td>
+        </tr>
+        <tr>
+          <td>IDSA-PHYS-002</td>
+          <td>Unauthorized Peripheral Access</td>
+          <td></td>
+          <td>Does plugging it in provide a serial shell or unintended file access?</td>
+        </tr>
+        <tr>
+          <td>IDSA-PHYS-003</td>
+          <td>HID Attack Surface</td>
+          <td></td>
+          <td>Can the device be spoofed to act as a keyboard when plugged in?</td>
+        </tr>
+      </tbody>
+    </table>
 
-<table>
-<thead>
-<tr>
-<th>Test ID</th>
-<th>Test Name</th>
-<th>Status</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>IDSA-OS-HARD</strong></td>
-<td><strong>System Hardening</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>IDSA-OS-HARD-001</td>
-<td>Raspberry Pi OS Hardening</td>
-<td></td>
-<td>Check for default pi credentials or unnecessary services.</td>
-</tr>
-<tr>
-<td>IDSA-OS-HARD-002</td>
-<td>Blink App UI Logic</td>
-<td></td>
-<td>Test for bypasses in the app’s lock screen or biometric auth.</td>
-</tr>
-<tr>
-<td><strong>IDSA-OS-CAM</strong></td>
-<td><strong>Camera Subsystem Security</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>IDSA-OS-CAM-001</td>
-<td>Unauthorized Stream Capture</td>
-<td></td>
-<td>Use OpenCV to see if a secondary script can hijack the camera while the main app is running.</td>
-</tr>
-<tr>
-<td>IDSA-OS-CAM-002</td>
-<td>Video Injection / Spoofing</td>
-<td></td>
-<td>Use OpenCV to attempt to inject a pre-recorded video loop into the stream buffer.</td>
-</tr>
-<tr>
-<td>IDSA-OS-CAM-003</td>
-<td>Buffer Privacy / Local Leaks</td>
-<td></td>
-<td>Use OpenCV to check if sensitive frames are left in /dev/shm or tmp directories after a capture.</td>
-</tr>
-</tbody>
-</table><h2 id="project-collaborators-and-acknowledgements">Project Collaborators and Acknowledgements</h2>
-<p>We would like to take this opportunity to acknowledge the contribution of our professor Jane Doe for guiding us into the right direction. This framework would not have been possible without you.</p>
-<ul>
-<li>John Doe</li>
-</ul>
-</div>
+    <h2 id="wireless-interfaces-idsa-rf">3.5 Wireless Interfaces (IDSA-RF)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Test ID</th>
+          <th>Test Name</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>IDSA-RF-001</td>
+          <td>Protocol Analysis (Wireshark)</td>
+          <td></td>
+          <td>Verify WPA2/3 implementation and handshake security.</td>
+        </tr>
+        <tr>
+          <td>IDSA-RF-002</td>
+          <td>De-authentication Sensitivity</td>
+          <td></td>
+          <td>Does the camera stop recording/fail insecurely during a Wi-Fi jam?</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="operating-system--ui-idsa-os">3.6 Operating System &amp; UI (IDSA-OS)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Test ID</th>
+          <th>Test Name</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>IDSA-OS-HARD</strong></td>
+          <td><strong>System Hardening</strong></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>IDSA-OS-HARD-001</td>
+          <td>Raspberry Pi OS Hardening</td>
+          <td></td>
+          <td>Check for default pi credentials or unnecessary services.</td>
+        </tr>
+        <tr>
+          <td>IDSA-OS-HARD-002</td>
+          <td>Blink App UI Logic</td>
+          <td></td>
+          <td>Test for bypasses in the app’s lock screen or biometric auth.</td>
+        </tr>
+        <tr>
+          <td><strong>IDSA-OS-CAM</strong></td>
+          <td><strong>Camera Subsystem Security</strong></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>IDSA-OS-CAM-001</td>
+          <td>Unauthorized Stream Capture</td>
+          <td></td>
+          <td>Use OpenCV to see if a secondary script can hijack the camera while the main app is running.</td>
+        </tr>
+        <tr>
+          <td>IDSA-OS-CAM-002</td>
+          <td>Video Injection / Spoofing</td>
+          <td></td>
+          <td>Use OpenCV to attempt to inject a pre-recorded video loop into the stream buffer.</td>
+        </tr>
+        <tr>
+          <td>IDSA-OS-CAM-003</td>
+          <td>Buffer Privacy / Local Leaks</td>
+          <td></td>
+          <td>Use OpenCV to check if sensitive frames are left in /dev/shm or tmp directories after a capture.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="project-collaborators-and-acknowledgements">Project Collaborators and Acknowledgements</h2>
+    <p>We would like to take this opportunity to acknowledge the contribution of our professor Jane Doe for guiding us into the right direction. This framework would not have been possible without you.</p>
+    <ul>
+      <li>John Doe</li>
+    </ul>
+  </main>
+
+  <script src="script.js"></script>
 </body>
-
 </html>
