@@ -1,1 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API & Cloud Integration</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
 
+  <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Sidebar">☰ Menu</button>
+
+  <nav id="sidebar" class="sidebar">
+    <a href="./index.html">
+    <img src="./img/idsa_cover.png" alt="IDSA Home">
+    </a>
+    <h2>Table of Contents</h2>
+    <ol>
+      <li>
+        <a href="./01_introduction/01_introduction.html"><strong>Introduction</strong></a>
+      </li>
+      <li>
+        <a href="./02_framework/02_framework.html"><strong>Testing Framework</strong></a>
+        <ul>
+          <li><a href="./02_framework/device_model.html">2.1. IoT Device Model</a></li>
+          <li><a href="./02_framework/threat_model.html">2.2. Threat Model</a></li>
+          <li><a href="./02_framework/methodology.html">2.3. Testing Methodology</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="./03_test_cases/03_test_cases.html"><strong>Test Case Catalog</strong></a>
+        <ul>
+          <li><a href="./03_test_cases/firmware.html">3.1. Firmware (IDSA-FW)</a></li>
+          <li><a href="./03_test_cases/network_data_services.html">3.2. Network Data Services (IDSA-NET)</a></li>
+          <li><a href="./03_test_cases/api_&_cloud_integration.html">3.3. API &amp; Cloud Integration (IDSA-API)</a></li>
+          <li><a href="./03_test_cases/physical_interfaces.html">3.4. Physical Interfaces (IDSA-PHYS)</a></li>
+          <li><a href="./03_test_cases/wireless_interfaces.html">3.5. Wireless Interfaces (IDSA-RF)</a></li>
+          <li><a href="./03_test_cases/os_&_user_interfaces.html">3.6. Operating System &amp; UI (IDSA-OS)</a></li>
+        </ul>
+      </li>
+    </ol>
+  </nav>
+
+  <main class="content">
+    <h1 id="iot-device-security-assessment">IoT Device Security Assessment</h1>
+    <p>This IoT Device Security Assessment project presents the design and development aimed at evaluating the security posture of consumer Internet of Things (IoT) devices across network, application, and firmware layers. Motivated by the rapid expansion of IoT ecosystems and the corresponding rise in security risks, the project applies an evidence-driven methodology inspired by industry standards such as the OWASP IoT Top 10 and NIST guidelines. The assessment framework guides the structured analysis of device behaviour, cloud interactions, and internal software components, ultimately enabling a comprehensive understanding of vulnerabilities and their implications.</p>
+    <p><img src="img/component_overview.png" alt="Component Overview"></p>
+    
+    <p>The following is the list of items to test during the API and Cloud Integration assessment:</p>
+    <p><code>Status</code> column can be set for values similar to "Pass", "Fail", "N/A".</p>
+    <p><code>Severity</code> column can be set for values "0-5" with 0 as the lowest to 5 being the highest potential magnitude of harm or damage if a risk event occurs (how bad).</p>
+    
+    <h2 id="api--cloud-integration-idsa-api">3.3 API &amp; Cloud Integration (IDSA-API)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Test ID</th>
+          <th>Test Name</th>
+          <th>Status</th>
+          <th>Severity</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>IDSA-API-001</td>
+          <td>Insecure Cloud Endpoints</td>
+          <td></td>
+          <td></td>
+          <td>Intercept Blink App-to-Cloud API calls (Burp Suite).</td>
+        </tr>
+        <tr>
+          <td>IDSA-API-002</td>
+          <td>Broken Object Level Auth (BOLA)</td>
+          <td></td>
+          <td></td>
+          <td>Can one user access another’s stream by changing a Device ID?</td>
+        </tr>
+      </tbody>
+    </table>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
