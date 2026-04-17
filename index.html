@@ -12,7 +12,7 @@
 
   <nav id="sidebar" class="sidebar">
     <a href="./index.html">
-    <img src="./img/idsa_cover.png" alt="IDSA Home">
+      <img src="./img/idsa_cover.png" alt="IDSA Home">
     </a>
     <h2>Table of Contents</h2>
     <ol>
@@ -20,22 +20,22 @@
         <a href="./01_introduction/01_introduction.html"><strong>Introduction</strong></a>
       </li>
       <li>
-        <a href="./02_framework/02_framework.html"><strong>Testing Framework</strong></a>
+        <a href="./02_framework/02_framework.html"><strong>IoT Security Testing Framework</strong></a>
         <ul>
-          <li><a href="./02_framework/device_model.html">2.1. IoT Device Model</a></li>
+          <li><a href="./02_framework/device_model.html">2.1. Entity Model</a></li>
           <li><a href="./02_framework/threat_model.html">2.2. Threat Model</a></li>
-          <li><a href="./02_framework/methodology.html">2.3. Testing Methodology</a></li>
+          <li><a href="./02_framework/methodology.html">2.3. Validation Framework</a></li>
         </ul>
       </li>
       <li>
-        <a href="./03_test_cases/03_test_cases.html"><strong>Test Case Catalog</strong></a>
+        <a href="./03_catalogue/03_catalogue.html"><strong>Catalogue</strong></a>
         <ul>
-          <li><a href="./03_test_cases/firmware.html">3.1. Firmware (IDSA-FW)</a></li>
-          <li><a href="./03_test_cases/network_data_services.html">3.2. Network Data Services (IDSA-NET)</a></li>
-          <li><a href="./03_test_cases/api_&_cloud.html">3.3. API &amp; Cloud Integration (IDSA-API)</a></li>
-          <li><a href="./03_test_cases/physical_interfaces.html">3.4. Physical Interfaces (IDSA-PHYS)</a></li>
-          <li><a href="./03_test_cases/wireless_interfaces.html">3.5. Wireless Interfaces (IDSA-RF)</a></li>
-          <li><a href="./03_test_cases/os_&_ui.html">3.6. Operating System &amp; UI (IDSA-OS)</a></li>
+          <li><a href="./03_catalogue/setup_threat_modelling.html">3.1. Setup & Threat Modelling</a></li>
+          <li><a href="./03_catalogue/network_api_wireless.html">3.2. Network, API & Wireless Testing</a></li>
+          <li><a href="./03_catalogue/firmware.html">3.3. Firmware Analysis</a></li>
+          <li><a href="./03_catalogue/device_hardware_os.html">3.4. Device Hardware & OS Security</a></li>
+          <li><a href="./03_catalogue/correlation_risk.html">3.5. Correlation & Risk Evaluation</a></li>
+          <li><a href="./03_catalogue/reporting_deliverables.html">3.6. Reporting & Deliverables</a></li>
         </ul>
       </li>
     </ol>
@@ -44,329 +44,258 @@
   <main class="content">
     <h1 id="iot-device-security-assessment">IoT Device Security Assessment</h1>
     <p>This IoT Device Security Assessment project presents the design and development aimed at evaluating the security posture of consumer Internet of Things (IoT) devices across network, application, and firmware layers. Motivated by the rapid expansion of IoT ecosystems and the corresponding rise in security risks, the project applies an evidence-driven methodology inspired by industry standards such as the OWASP IoT Top 10 and NIST guidelines. The assessment framework guides the structured analysis of device behaviour, cloud interactions, and internal software components, ultimately enabling a comprehensive understanding of vulnerabilities and their implications.</p>
-    <p><img src="img/component_overview_light.png" alt="Component Overview"></p>
+    <p><img src="img/component_overview_dark.png" alt="Component Overview"></p>
     
-    <h1 id="testing-checklist">Testing Checklist</h1>
-    <p>The following is the list of items to test during the assessment:</p>
+    <h1 id="catalogue">Catalogue</h1>
+    <p>The following is the list of items required during the assessment:</p>
     <p><code>Status</code> column can be set for values similar to "Pass", "Fail", "N/A".</p>
-    <p><code>Severity</code> column can be set for values "0-10" with 0 as the lowest to 10 being the highest potential magnitude of harm or damage if a risk event occurs (how bad). Refer to the <a href="./02_framework/methodology.html">2.3 Testing Methodology</a> for specific CVSS rating..</p>
+    <p><code>Severity</code> column can be set for values "0-10" or "N/A" with 0 as the lowest to 10 being the highest potential magnitude of harm or damage if a risk event occurs (how bad). Refer to the <a href="./02_framework/methodology.html">2.3. Testing Methodology</a> for specific CVSS rating.</p>
     
-    <h2 id="firmware-idsa-fw">3.1 Firmware (IDSA-FW)</h2>
+    <!-- 3.1 Setup & Threat Modelling -->
+    <h2 id="setup-threat-modelling">3.1 Setup &amp; Threat Modelling</h2>
     <table>
       <thead>
         <tr>
           <th>Test ID</th>
-          <th>Test Name</th>
+          <th>Phase / Test Name</th>
           <th>Status</th>
           <th>Severity</th>
-          <th>Notes</th>
+          <th>Notes / Evidence</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><strong>IDSA-FW-INFO</strong></td>
-          <td><strong>Information Gathering</strong></td>
+          <td>IDSA-SETUP-01</td>
+          <td>Device Selection &amp; Inventory (FR1, FR2)</td>
           <td></td>
           <td></td>
-          <td></td>
+          <td>Record device specs, hardware version, and identify exposed boot logs or hardware implementation details.</td>
         </tr>
         <tr>
-          <td>IDSA-FW-INFO-001</td>
-          <td>Disclosure of Source Code and Binaries</td>
+          <td>IDSA-MODEL-01</td>
+          <td>IoT Threat Model (FR4, FR5)</td>
           <td></td>
           <td></td>
-          <td>Analyze Blink updates via App; Use binwalk on RPi filesystem/EEPROM.</td>
+          <td>Map all identified attack vectors (USB, Wi-Fi, Cloud API, Physical) to the threat model.</td>
         </tr>
         <tr>
-          <td>IDSA-FW-INFO-002</td>
-          <td>Disclosure of Implementation Details</td>
+          <td>IDSA-MODEL-02</td>
+          <td>Visual Threat Diagram (FR6)</td>
           <td></td>
           <td></td>
-          <td>Check for exposed hardware specs or boot logs.</td>
+          <td>Confirm diagram shows all attack surfaces including RPi, Blink App, and Cloud Endpoints.</td>
         </tr>
         <tr>
-          <td><strong>IDSA-FW-CONF</strong></td>
-          <td><strong>Configuration and Patch Management</strong></td>
+          <td>IDSA-MODEL-03</td>
+          <td>Threat Impact Rating (FR7)</td>
           <td></td>
           <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>IDSA-FW-CONF-001</td>
-          <td>Usage of Outdated Software</td>
-          <td></td>
-          <td></td>
-          <td>Check apt packages on RPi; Verify Blink firmware version in-app.</td>
-        </tr>
-        <tr>
-          <td>IDSA-FW-CONF-002</td>
-          <td>Update Mechanism Security</td>
-          <td></td>
-          <td></td>
-          <td>Test Blink app-based updates vs. RPi sudo apt full-upgrade security</td>
-        </tr>
-        <tr>
-          <td><strong>IDSA-FW-SCRT</strong></td>
-          <td><strong>Secrets</strong></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>IDSA-FW-SCRT-001</td>
-          <td>Secrets Stored in Public Storage</td>
-          <td></td>
-          <td></td>
-          <td>Search for hardcoded keys in binwalk extracted files.</td>
-        </tr>
-        <tr>
-          <td>IDSA-FW-SCRT-002</td>
-          <td>Unencrypted Storage of Secrets</td>
-          <td></td>
-          <td></td>
-          <td>Check /etc/ or config files on RPi; Check local cache for Blink.</td>
+          <td>Assign likelihood/impact scores to identified threats based on technical exploitability.</td>
         </tr>
       </tbody>
     </table>
 
-    <h2 id="network-data-services-idsa-net">3.2 Network Data Services (IDSA-NET)</h2>
+    <!-- 3.2 Network, API & Wireless Testing -->
+    <h2 id="network-api-wireless">3.2 Network, API &amp; Wireless Testing</h2>
     <table>
       <thead>
         <tr>
           <th>Test ID</th>
-          <th>Test Name</th>
+          <th>Phase / Test Name</th>
           <th>Status</th>
           <th>Severity</th>
-          <th>Notes</th>
+          <th>Notes / Evidence</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><strong>IDSA-NET-SCAN</strong></td>
-          <td><strong>Service Discovery</strong></td>
+          <td>IDSA-NET-SCAN-01</td>
+          <td>Service Discovery &amp; Info (FR3, FR12, FRND)</td>
           <td></td>
           <td></td>
-          <td></td>
+          <td><strong>Nmap:</strong> Enumerate open ports, service versions, and OS fingerprints. Use <strong>NSE scripts</strong> to check for known CVEs on identified services.</td>
         </tr>
         <tr>
-          <td>IDSA-NET-SCAN-001</td>
-          <td>Open Port &amp; Service Enumeration</td>
+          <td>IDSA-NET-STRM-01</td>
+          <td>Traffic Encryption (FR8, FR9, FR10)</td>
           <td></td>
           <td></td>
-          <td>Use nmap to identify listening ports, service versions, and OS fingerprints.</td>
+          <td><strong>Wireshark:</strong> Verify WebRTC/Blink stream encryption. Monitor Wi-Fi for unencrypted PII; use <strong>Foremost</strong> to attempt image recovery from captured packets.</td>
         </tr>
         <tr>
-          <td>IDSA-NET-SCAN-002</td>
-          <td>Vulnerability Scanning (NSE)</td>
+          <td>IDSA-NET-RF-01</td>
+          <td>Wireless Interface Security (FR14)</td>
           <td></td>
           <td></td>
-          <td>Use nmap scripting engine (NSE) to check for known CVEs on open services.</td>
+          <td><strong>Wireshark:</strong> Analyze WPA2/3 handshakes. Perform de-authentication tests to check if the camera fails insecurely or stops recording during jamming.</td>
         </tr>
         <tr>
-          <td><strong>IDSA-NET-STRM</strong></td>
-          <td><strong>Stream Encryption</strong></td>
+          <td>IDSA-API-TEST-01</td>
+          <td>API Interception &amp; Auth (FR15, FR16)</td>
           <td></td>
           <td></td>
-          <td></td>
+          <td><strong>Burp Suite:</strong> Intercept App-to-Cloud calls. Test for <strong>BOLA</strong> (changing Device IDs), session hijacking, and credential harvesting/phishing risks in UI.</td>
         </tr>
         <tr>
-          <td>IDSA-NET-STRM-001</td>
-          <td>Encrypted Media Streaming</td>
+          <td>IDSA-API-FUZZ-01</td>
+          <td>API Fuzzing &amp; Pattern Logging (FR17, FR18)</td>
           <td></td>
           <td></td>
-          <td>Use Wireshark to verify if Blink/RPi (WebRTC) streams are encrypted.</td>
-        </tr>
-        <tr>
-          <td>IDSA-NET-STRM-002</td>
-          <td>LAN Data Transmission</td>
-          <td></td>
-          <td></td>
-          <td>Monitor Wi-Fi traffic for unencrypted PII or command packets. <strong>Convert captured packets to images using Foremost.</strong></td>
-        </tr>
-        <tr>
-          <td><strong>IDSA-NET-AUTH</strong></td>
-          <td><strong>Authentication Security</strong></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>IDSA-NET-AUTH-001</td>
-          <td>Brute Force / Rainbow Table</td>
-          <td></td>
-          <td></td>
-          <td>Test Blink App login and RPi SSH/Local login for rate limiting.</td>
-        </tr>
-        <tr>
-          <td>IDSA-NET-AUTH-002</td>
-          <td>Phishing &amp; Session Hijacking</td>
-          <td></td>
-          <td></td>
-          <td>Evaluate Blink UI for credential harvesting risks.</td>
+          <td>Run fuzzing on endpoints; test Blink App login for <strong>rate limiting</strong> and brute-force resistance.</td>
         </tr>
       </tbody>
     </table>
 
-    <h2 id="api--cloud-integration-idsa-api">3.3 API &amp; Cloud Integration (IDSA-API)</h2>
+    <!-- 3.3 Firmware Analysis -->
+    <h2 id="firmware-analysis">3.3 Firmware Analysis</h2>
     <table>
       <thead>
         <tr>
           <th>Test ID</th>
-          <th>Test Name</th>
+          <th>Phase / Test Name</th>
           <th>Status</th>
           <th>Severity</th>
-          <th>Notes</th>
+          <th>Notes / Evidence</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>IDSA-API-001</td>
-          <td>Insecure Cloud Endpoints</td>
+          <td>IDSA-FW-ACQ-01</td>
+          <td>Acquisition &amp; Backup (FR19, FR21)</td>
           <td></td>
           <td></td>
-          <td>Intercept Blink App-to-Cloud API calls (Burp Suite).</td>
+          <td>Verify firmware is saved; analyze Blink updates via App and capture RPi boot logs.</td>
         </tr>
         <tr>
-          <td>IDSA-API-002</td>
-          <td>Broken Object Level Auth (BOLA)</td>
+          <td>IDSA-FW-EXTRACT-01</td>
+          <td>Extraction &amp; Binwalk (FR20)</td>
           <td></td>
           <td></td>
-          <td>Can one user access another’s stream by changing a Device ID?</td>
+          <td>Use <strong>Binwalk</strong> on RPi filesystem and EEPROM to extract files and identify disclosure of source code or binaries.</td>
+        </tr>
+        <tr>
+          <td>IDSA-FW-SCRT-01</td>
+          <td>Secrets &amp; Hardcoded Keys (FR22)</td>
+          <td></td>
+          <td></td>
+          <td>Search extracted files for hardcoded keys/passwords. Check <code>/etc/</code> and config files for unencrypted secrets and local Blink caches.</td>
+        </tr>
+        <tr>
+          <td>IDSA-FW-CONF-01</td>
+          <td>Insecure Configs &amp; Libraries (FR23)</td>
+          <td></td>
+          <td></td>
+          <td>Check <code>apt</code> packages on RPi for outdated software. Evaluate security of the update mechanism (B/App vs. <code>sudo apt full-upgrade</code>).</td>
         </tr>
       </tbody>
     </table>
 
-    <h2 id="physical-interfaces-idsa-phys">3.4 Physical Interfaces (IDSA-PHYS)</h2>
+    <!-- 3.4 Device Hardware & OS Security -->
+    <h2 id="device-hardware-os">3.4 Device Hardware &amp; OS Security</h2>
     <table>
       <thead>
         <tr>
           <th>Test ID</th>
-          <th>Test Name</th>
+          <th>Phase / Test Name</th>
           <th>Status</th>
           <th>Severity</th>
-          <th>Notes</th>
+          <th>Notes / Evidence</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>IDSA-PHYS-001</td>
-          <td>USB Host Detection (Win/Lin/Mac)</td>
+          <td>IDSA-OS-HARD-01</td>
+          <td>System Hardening (FR24)</td>
           <td></td>
           <td></td>
-          <td>Does it mount as a camera/webcam or a storage device?</td>
+          <td>Check RPi OS for default <code>pi</code> credentials and unnecessary services. Test Blink App UI for bypasses in lock screen or biometric auth.</td>
         </tr>
         <tr>
-          <td>IDSA-PHYS-002</td>
-          <td>Unauthorized Peripheral Access</td>
+          <td>IDSA-OS-CAM-01</td>
+          <td>Camera Subsystem Security (FR25)</td>
           <td></td>
           <td></td>
-          <td>Does plugging it in provide a serial shell or unintended file access?</td>
+          <td><strong>OpenCV:</strong> Attempt to hijack the stream via secondary scripts, inject pre-recorded video loops, and check <code>/dev/shm</code> or <code>/tmp</code> for leaked frames.</td>
         </tr>
         <tr>
-          <td>IDSA-PHYS-003</td>
-          <td>HID Attack Surface</td>
+          <td>IDSA-PHYS-01</td>
+          <td>Physical Interface Attack Surface (FR26)</td>
           <td></td>
           <td></td>
-          <td>Can the device be spoofed to act as a keyboard when plugged in?</td>
+          <td><strong>USB Testing:</strong> Check if device mounts as storage/webcam; test for unauthorized serial shells; test if device can be spoofed as an <strong>HID (Keyboard)</strong> attack.</td>
         </tr>
       </tbody>
     </table>
 
-    <h2 id="wireless-interfaces-idsa-rf">3.5 Wireless Interfaces (IDSA-RF)</h2>
+    <!-- 3.5 Correlation & Risk Evaluation -->
+    <h2 id="correlation-risk-evaluation">3.5 Correlation &amp; Risk Evaluation</h2>
     <table>
       <thead>
         <tr>
           <th>Test ID</th>
-          <th>Test Name</th>
+          <th>Phase / Test Name</th>
           <th>Status</th>
           <th>Severity</th>
-          <th>Notes</th>
+          <th>Notes / Evidence</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>IDSA-RF-001</td>
-          <td>Protocol Analysis (Wireshark)</td>
+          <td>IDSA-CORR-01</td>
+          <td>Vulnerability Correlation (FR25, FR26)</td>
           <td></td>
           <td></td>
-          <td>Verify WPA2/3 implementation and handshake security.</td>
+          <td>Cross-reference network findings (e.g., open ports) with firmware findings (e.g., outdated packages).</td>
         </tr>
         <tr>
-          <td>IDSA-RF-002</td>
-          <td>De-authentication Sensitivity</td>
+          <td>IDSA-RISK-01</td>
+          <td>Risk Matrix &amp; Severity (FR27, FR28)</td>
           <td></td>
           <td></td>
-          <td>Does the camera stop recording/fail insecurely during a Wi-Fi jam?</td>
+          <td>Map all identified vulnerabilities (BOLA, Hardcoded Keys, etc.) to a risk matrix.</td>
+        </tr>
+        <tr>
+          <td>IDSA-MITIG-01</td>
+          <td>Mitigation Recommendations (FR29)</td>
+          <td></td>
+          <td></td>
+          <td>Develop NIST and FIRST (CVSS) fix strategies for all identified risks.</td>
         </tr>
       </tbody>
     </table>
 
-    <h2 id="operating-system--ui-idsa-os">3.6 Operating System &amp; UI (IDSA-OS)</h2>
+    <!-- 3.6 Reporting & Deliverables -->
+    <h2 id="reporting-deliverables">3.6 Reporting &amp; Deliverables</h2>
     <table>
       <thead>
         <tr>
           <th>Test ID</th>
-          <th>Test Name</th>
+          <th>Phase / Test Name</th>
           <th>Status</th>
           <th>Severity</th>
-          <th>Notes</th>
+          <th>Notes / Evidence</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><strong>IDSA-OS-HARD</strong></td>
-          <td><strong>System Hardening</strong></td>
+          <td>IDSA-REPT-01</td>
+          <td>Technical Report Compilation (FR30, FR32)</td>
           <td></td>
           <td></td>
-          <td></td>
+          <td>Final report containing Nmap logs, Wireshark captures, Binwalk extractions, and OpenCV screenshots.</td>
         </tr>
         <tr>
-          <td>IDSA-OS-HARD-001</td>
-          <td>Raspberry Pi OS Hardening</td>
+          <td>IDSA-REPT-02</td>
+          <td>Executive Summary &amp; Presentation (FR31)</td>
           <td></td>
           <td></td>
-          <td>Check for default pi credentials or unnecessary services.</td>
-        </tr>
-        <tr>
-          <td>IDSA-OS-HARD-002</td>
-          <td>Blink App UI Logic</td>
-          <td></td>
-          <td></td>
-          <td>Test for bypasses in the app’s lock screen or biometric auth.</td>
-        </tr>
-        <tr>
-          <td><strong>IDSA-OS-CAM</strong></td>
-          <td><strong>Camera Subsystem Security</strong></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>IDSA-OS-CAM-001</td>
-          <td>Unauthorized Stream Capture</td>
-          <td></td>
-          <td></td>
-          <td>Use OpenCV to see if a secondary script can hijack the camera while the main app is running.</td>
-        </tr>
-        <tr>
-          <td>IDSA-OS-CAM-002</td>
-          <td>Video Injection / Spoofing</td>
-          <td></td>
-          <td></td>
-          <td>Use OpenCV to attempt to inject a pre-recorded video loop into the stream buffer.</td>
-        </tr>
-        <tr>
-          <td>IDSA-OS-CAM-003</td>
-          <td>Buffer Privacy / Local Leaks</td>
-          <td></td>
-          <td></td>
-          <td>Use OpenCV to check if sensitive frames are left in /dev/shm or tmp directories after a capture.</td>
+          <td>Prepare non-technical summary of hardware/software risks for stakeholders.</td>
         </tr>
       </tbody>
     </table>
 
     <h2 id="project-collaborators-and-acknowledgements">Project Collaborators and Acknowledgements</h2>
-    <p>We would like to take this opportunity to acknowledge the contribution of our professor Mandeep Pannu for guiding us into the right direction. This framework would not have been possible without you.</p>
+    <p>We sincerely thank Professor Mandeep Pannu for her mentorship. Her expertise in IoT security, strategic guidance on our presentation, and constant encouragement were fundamental to the success of this assessment framework.</p>
     <ul>
       <li>Amer Al Sous</li>
       <li>Waleed Kuvailid</li>
