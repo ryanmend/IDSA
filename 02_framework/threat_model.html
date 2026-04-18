@@ -1,1 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2.2. Threat Model</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <button id="menu-toogle" class="menu-toggle" aria-label="Toggle Sidebar">☰ Menu</button>
+   <nav id="sidebar" class="sidebar">
+    <a href="../index.html">
+      <img src="../img/idsa_cover.png" alt="IDSA Home">
+    </a>
+    <h2>Table of Contents</h2>
+    <ol>
+      <li>
+        <a href="../01_introduction/01_introduction.html"><strong class="nav-link">Introduction</strong></a>
+      </li>
+      <li>
+        <a href="./02_framework.html"><strong class="nav-link">IoT Security Testing Framework</strong></a>
+        <ul>
+          <li><a href="./entity_model.html">2.1. Entity Model</a></li>
+          <li class="active"><a href="./threat_model.html"><strong class="none">2.2. Threat Model</strong></a></li>
+          <li><a href="./framework.html">2.3. Validation Framework</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="../03_catalogue/03_catalogue.html"><strong class="nav-link">Catalogue</strong></a>
+        <ul>
+          <li><a href="../03_catalogue/setup_threat_modelling.html">3.1. Setup & Threat Modelling</a></li>
+          <li><a href="../03_catalogue/network_api_wireless.html">3.2. Network, API & Wireless Testing</a></li>
+          <li><a href="../03_catalogue/firmware.html">3.3. Firmware Analysis</a></li>
+          <li><a href="../03_catalogue/device_hardware_os.html">3.4. Device Hardware & OS Security</a></li>
+          <li><a href="../03_catalogue/correlation_risk.html">3.5. Correlation & Risk Evaluation</a></li>
+          <li><a href="../03_catalogue/reporting_deliverables.html">3.6. Reporting & Deliverables</a></li>
+        </ul>
+      </li>
+    </ol>
+  </nav>
+  <main class="content">
+    <h1>2.2. Threat Model</h1>
+    
+    <p>This chapter will describe a selection scheme for test cases, which is based on potential threats identified through a formal threat and risk modeling approach, specifically tailored to the IoT camera being tested in this framework. The threat model used in this and provides a structured framework for defining and selecting threats relevant to the specific architecture and data flows of an IoT camera device.</p>
+    
+    <figure>
+        <img src="../img/threat_model_scheme.png" alt="IoT Threat Model">
+    </figure>
 
+    <p>The rationale for adopting a formal threat and risk modeling is:</p>
+    <ul>
+        <li><strong>Architecture-Specific Depth:</strong> Formal threat and risk modeling allows for a deep analysis of the specific implementation design of the IoT camera. Since cameras often involve complex subsystems (e.g., video encoding, audio processing, local storage, and network interfaces), identified threats are based on precise conditions of the solution, ensuring that high-value risks associated with media streams and persistent connectivity are not overlooked.</li>
+        <li><strong>Risk Justification:</strong> While performing a formal threat and risk analysis requires more time, this investment is justified for an IoT camera due to its critical nature as a network-facing device handling sensitive visual data. Making a formal analysis the standard requirement ensures comprehensive coverage of attack vectors without significantly increasing expenses per test beyond acceptable limits for high-risk hardware.</li>
+        <li><strong>Scope and Access Definition:</strong> As will be explained in following sections, the spectrum of potential threats reaches from anonymous global actors to privileged individuals and users of the device. The list of threats can be narrowed down by defining minimum and maximum access requirements, representing the test perspective. Every device component and test case will be tagged with the access level required to perform the respective tests. Hence, the list of device components in scope of the test as well as the list of applicable test cases will be a result of applying the formal threat model on the results yielded by the device model.</li>
+    </ul>
+
+    <h2>Attack Vectors</h2>
+    <figure>
+        <img src="../img/attack_vectors.png" alt="Attack Vectors">
+    </figure>
+    <p>This diagram provides a comprehensive visualization of the attack surface associated with an <strong>IoT Security Camera</strong>, segmented into three primary domains: <strong>Physical</strong>, <strong>Network</strong>, and <strong>Cloud</strong>. It serves as a foundational reference for conducting a holistic security assessment, ensuring that vulnerabilities are identified across all layers of the device's lifecycle.</p>
+
+    <h3>1. Physical Domain</h3>
+    <p>This branch addresses threats arising from direct physical access to the hardware. Even if digital defenses are strong, physical proximity allows an attacker to bypass software locks entirely.</p>
+    <ul>
+        <li><strong>Steal Camera:</strong> Risk of theft leading to loss of surveillance coverage or data exfiltration.</li>
+        <li><strong>Tamper with Hardware:</strong> Physical manipulation of sensors, lenses, or internal components (e.g., blocking the lens or altering hardware IDs).</li>
+        <li><strong>Modify Firmware:</strong> Accessing the device via physical ports (like UART) to flash malicious firmware or reset security credentials.</li>
+    </ul>
+
+    <h3>2. Network Domain</h3>
+    <p>This branch analyzes vulnerabilities within the communication layer, focusing on how the camera connects to the local environment. It is subdivided into two specific attack vectors:</p>
+    <ul>
+        <li><strong>Wi-Fi Attacks:</strong> Targets the wireless interface and authentication protocols.
+            <ul>
+                <li><em>Rogue AP:</em> An attacker sets up a fake access point to lure the camera (or user) into connecting, enabling man-in-the-middle scenarios.</li>
+                <li><em>Sniff Credentials:</em> Intercepting unencrypted traffic or weak handshake packets to steal Wi-Fi passwords.</li>
+                <li><em>Brute Force:</em> Attempting to guess default administrative credentials often found on consumer IoT devices.</li>
+            </ul>
+        </li>
+        <li><strong>Local Networks:</strong> Focuses on the security of the Local Area Network (LAN) itself.
+            <ul>
+                <li><em>Network Scan:</em> Identifying open ports or services exposed on the camera's IP address.</li>
+                <li><em>Exploit Router:</em> Compromising the gateway router to gain a pivot point into the internal network where the camera resides.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>3. Cloud Domain</h3>
+    <p>This branch evaluates risks associated with remote management, data storage, and backend infrastructure. Since many IoT cameras rely on cloud services for recording and analytics, this layer is critical.</p>
+    <ul>
+        <li><strong>DDoS Attack:</strong> Overwhelming the device or its cloud endpoint to cause a "Flood camera" state (loss of connectivity).</li>
+        <li><strong>Cloud Account:</strong> Targeting the user's account credentials used to manage the device.
+            <ul>
+                <li><em>Credential Stuffing:</em> Using leaked passwords from other breaches to log into the camera's cloud dashboard.</li>
+            </ul>
+        </li>
+        <li><strong>Data Breach:</strong> Compromising the storage backend.
+            <ul>
+                <li><em>Access Recordings:</em> Stealing historical video footage stored in the cloud.</li>
+            </ul>
+        </li>
+        <li><strong>Man-in-the-Middle (MitM):</strong> Intercepting the encrypted stream between the device and the cloud to "Modify video" or inject frames into the live feed.</li>
+    </ul>
+
+    <h4>Summary for Assessment Frameworks</h4>
+    <p>When integrating this diagram into the security assessment framework, evaluators should use it as a checklist to ensure that:</p>
+    <ol>
+        <li><strong>Physical Hardening</strong> is tested (e.g., reset buttons, port access).</li>
+        <li><strong>Network Hygiene</strong> is verified (e.g., default passwords, open ports, Wi-Fi encryption).</li>
+        <li><strong>Cloud Posture</strong> is audited (e.g., API security, account MFA, and data encryption at rest/in transit).</li>
+    </ol>
+  </main>
+  <script src="../js/script.js"></script>
+</body>
+</html>

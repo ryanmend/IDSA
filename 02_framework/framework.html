@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2.3. Validation Framework</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <button id="menu-toogle" class="menu-toggle" aria-label="Toggle Sidebar">☰ Menu</button>
+   <nav id="sidebar" class="sidebar">
+    <a href="../index.html">
+      <img src="../img/idsa_cover.png" alt="IDSA Home">
+    </a>
+    <h2>Table of Contents</h2>
+    <ol>
+      <li>
+        <a href="../01_introduction/01_introduction.html"><strong class="nav-link">Introduction</strong></a>
+      </li>
+      <li class="active">
+        <a href="./02_framework.html"><strong class="nav-link">IoT Security Testing Framework</strong></a>
+        <ul>
+          <li><a href="./entity_model.html">2.1. Entity Model</a></li>
+          <li><a href="./threat_model.html">2.2. Threat Model</a></li>
+          <li class="active"><a href="./framework.html"><strong class="none">2.3. Validation Framework</strong></a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="../03_catalogue/03_catalogue.html"><strong class="nav-link">Catalogue</strong></a>
+        <ul>
+          <li><a href="../03_catalogue/setup_threat_modelling.html">3.1. Setup & Threat Modelling</a></li>
+          <li><a href="../03_catalogue/network_api_wireless.html">3.2. Network, API & Wireless Testing</a></li>
+          <li><a href="../03_catalogue/firmware.html">3.3. Firmware Analysis</a></li>
+          <li><a href="../03_catalogue/device_hardware_os.html">3.4. Device Hardware & OS Security</a></li>
+          <li><a href="../03_catalogue/correlation_risk.html">3.5. Correlation & Risk Evaluation</a></li>
+          <li><a href="../03_catalogue/reporting_deliverables.html">3.6. Reporting & Deliverables</a></li>
+        </ul>
+      </li>
+    </ol>
+  </nav>
+  <main class="content">
+    <h1>2.3. Validation Framework</h1>
+    
+    <p>This chapter outlines a specialized methodology for conducting IoT camera penetration tests. Building upon the concepts established in the <a href="./entity_model.html">2.1 Entity Model</a> and <a href="./threat_model.html">2.2 Threat Model</a>, this approach serves as a supplement to existing penetration testing frameworks. The methodology details the essential testing facets required for an IoT camera assessment, providing both a comprehensive catalog of test cases per device component and a structured checklist for streamlined tracking. As established in previous chapters, the selection of specific test cases is driven by the results of the previously defined device and threat models.</p>
+    
+    <p>The chapter first demonstrates how to integrate this methodology into broader workflows and identifies the stages at which its core concepts should be applied. Through the structured checklist, testers can systematically ensure that all critical components—including firmware, network interfaces, software, and physical enclosures—are thoroughly assessed. Following this, we explain various testing techniques applicable across multiple test cases. Finally, the structural logic of the test case catalog is detailed.</p>
+    
+    <p>Unlike generic IoT penetration testing frameworks, this methodology employs a scalable yet comprehensive approach tailored specifically for IoT cameras. It identifies security issues highly relevant to camera ecosystems without being constrained by specific technologies or standards. This provides greater flexibility than traditional frameworks, an essential advantage given the rapid evolution of camera hardware and software. While highly adaptable to various camera technologies, it remains robust enough for further specialization.</p>
+    
+    <p><em>Note that test cases applicable to multiple components are excluded from this chapter; the complete <a href="../03_catalogue/03_catalogue.html">3. Catalogue</a> is available in its dedicated section.</em></p>
+
+    <h2>Description of the Hierarchic Structure</h2>
+    <p>In the following, the overall structure of the test case catalog as well as the general layout of a test case will be defined.</p>
+    
+    <h3>Structure of the Catalog of Test Cases</h3>
+    <p>The catalog of test cases will follow a hierarchic (tree) structure. Starting from a single root node (IOT), each component of the device model will be represented as a child node, thereby forming its own subtree. Subsequently, further nodes will be added as children to the component nodes, eventually resulting in each test case being a leaf node. A unique identifier, incorporating this structure, will be assigned to each node, allowing to reference it in the test report or other documents.</p>
+    
+    <p>The following hierarchic levels and types of nodes are defined:</p>
+    <ul>
+        <li><strong>Component:</strong> The first main hierarchy level is the component. The type of component (device-internal element/interface) was not included in the hierarchy for the:: sake of simplicity and due to the lack of added value.<br>
+            <em>Short representation: 2 - 5 uppercase alphabetic characters</em><br>
+            <em>Examples: IDSA-FW, IDSA-NET, IDSA-INT, IDSA-API, IDSA-RF, IDSA-OS</em>
+        </li>
+        <li><strong>Category:</strong> The second main hierarchy level is the category, which can be used to group test cases, e.g., all test cases related to authorization can be grouped in the category AUTHZ.<br>
+            <em>Short representation: 2 - 5 uppercase alphabetic characters</em><br>
+            <em>Examples: IDSA-*-AUTHZ, IDSA-*-INFO, IDSA-*-CONF</em>
+        </li>
+        <li><strong>Test Case:</strong> The third main hierarchy level is the test case.<br>
+            <em>Short representation: three-digit incremental number of the test case.</em><br>
+            <em>Examples: IDSA-FW-*-001, IDSA-FW-*-002, IDSA-FW-*-003</em>
+        </li>
+    </ul>
+
+    <p>This kind of structure allows to efficiently determine applicable subtrees by deselecting nodes (e.g., components, component specializations and categories) that are not relevant for a given device or test scenario.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Hierarchy Level</th>
+                <th>ID</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>0</td>
+                <td>IOT</td>
+                <td>Root Node</td>
+            </tr>
+            <tr>
+                <td rowspan="7" valign="top">1</td>
+                <td colspan="2"><strong>Component</strong></td>
+            </tr>
+            <tr>
+                <td>IDSA-FW</td>
+                <td>Firmware</td>
+            /tr>
+            <tr>
+                <td>IDSA-NET</td>
+                <td>Network Data Services</td>
+            </tr>
+            <tr>
+                <td>IDSA-API</td>
+                <td>API & Cloud Integration</td>
+            </tr>
+            <tr>
+                <td>IDSA-PHYS</td>
+                <td>Physical Interfaces</td>
+            </tr>
+            <tr>
+                <td>IDSA-RF</td>
+                <td>Wireless Interfaces</td>
+            </tr>
+            <tr>
+                <td>IDSA-OS</td>
+                <td>Operating System & UI</td>
+            </tr>
+            <tr>
+                <td rowspan="9" valign="top">2</td>
+                <td colspan="2"><strong>Category</strong></td>
+            </tr>
+            <tr>
+                <td>IDSA-*-INFO</td>
+                <td>Information Gathering</td>
+            </tr>
+             <tr>
+                <td>IDSA-*-CONF</td>
+                <td>Configuration and Patch Management</td>
+            </tr>
+            <tr>
+                <td>IDSA-*-SCRT</td>
+                <td>Secrets</td>
+            </tr>
+            <tr>
+                <td>IDSA-*-SCAN</td>
+                <td>Service Discovery</td>
+            </tr>
+            <tr>
+                <td>IDSA-*-STRM</td>
+                <td>Stream Encryption</td>
+            </tr>
+            <tr>
+                <td>IDSA-*-AUTH</td>
+                <td>Authentication Security</td>
+            </tr>
+            <tr>
+                <td>IDSA-*-HARD</td>
+                <td>System Hardening</td>
+            </tr>
+            <tr>
+                <td>IDSA-*-CAM</td>
+                <td>Camera Subsystem Security</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <figure>
+        <img src="../img/component_overview_dark.png" alt="Component Overview">
+    </figure>
+
+    <h2>IoT Vulnerability Severity Reference (CVSS v3.1/v4.0)</h2>
+    <p>This table defines how Common Vulnerability Scoring System (CVSS) scores are interpreted specifically for IoT environments, where factors like physical access and firmware update constraints may increase risk.</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Score Range</th>
+                <th>Severity Level</th>
+                <th>General Impact Description</th>
+                <th>IoT-Specific Context & Risk Factors</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>0.0 – 3.9</strong></td>
+                <td><strong>Low</strong></td>
+                <td>Minor impact; often requires specific conditions or local access to exploit.</td>
+                <td>• Firmware update failure<br>• UI/UX glitches<br>• Local-only privilege escalation (e.g., via USB)<br>• <em>IoT Risk:</em> Low unless device is in a high-traffic network segment.</td>
+            </tr>
+            <tr>
+                <td><strong>4.0 – 6.9</strong></td>
+                <td><strong>Medium</strong></td>
+                <td>Moderate impact; may allow remote denial-of-service or limited data exfiltration.</td>
+                <td>• Remote DoS (e.g., buffer overflow)<br>• Limited RCE with restricted payload<br>• <em>IoT Risk:</em> Medium if device is connected to a LAN that shares resources with critical infrastructure.</td>
+            </tr>
+            <tr>
+                <td><strong>7.0 – 8.9</strong></td>
+                <td><strong>High</strong></td>
+                <td>Significant impact; potential for remote code execution or persistent access.</td>
+                <td>• Remote Code Execution (RCE)<br>• Physical access compromise<br>• <em>IoT Risk:</em> High if device controls physical actuators, cameras, or sensors.<br>• <em>Patching:</em> Difficult due to constrained resources.</td>
+            </tr>
+            <tr>
+                <td><strong>9.0 – 10.0</strong></td>
+                <td><strong>Critical</strong></td>
+                <td>Massive impact; full system takeover or safety-critical failure.</td>
+                <td>• Full Device Hijack (Botnet recruitment)<br>• Safety-Critical Failure (e.g., medical, industrial control)<br>• <em>IoT Risk:</em> Critical if device bridges secure networks to the internet.<br>• <em>Patching:</em> Often requires hardware replacement.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Key Considerations for IoT Scoring</h3>
+    <ol>
+        <li><strong>Attack Surface:</strong> A "Medium" score on a smart thermostat is less risky than a "Medium" score on an industrial PLC (Programmable Logic Controller).</li>
+        <li><strong>Update Mechanism:</strong> Devices with no OTA (Over-The-Air) update capability may require hardware replacement for High/Critical fixes, effectively raising the business severity.</li>
+        <li><strong>Physical Proximity:</strong> Vulnerabilities requiring physical access are often scored lower in IoT contexts unless the device is easily accessible to an attacker.</li>
+        <li><strong>Versioning:</strong> Always check if your firmware version matches the CVSS metadata (e.g., CVE-202X-XXXX).</li>
+    </ol>
+    <blockquote>
+        <strong>Note:</strong> This table aligns with NIST and ISO/IEC standards for IoT risk management. For detailed metric breakdowns, refer to the <a href="https://nvd.nist.gov/">NVD</a> or vendor-specific advisories.
+    </blockquote>
+
+    <h3>Structure of Test Cases</h3>
+    <p>Each individual test case, which is represented by a leaf node, is divided into the following sections:</p>
+    <ul>
+        <li><strong>Test ID:</strong> A unique identifier assigned to each specific security check (e.g., IDSA-*-*). This allows for precise referencing within reports or automated scanning tools.</li>
+        <li><strong>Test Name:</strong> A descriptive title of the security check being performed (e.g., "Default Password Verification").</li>
+        <li><strong>Status:</strong> The current state of the test execution, such as Pending, In Progress, Passed (vulnerable), Failed (secure), or N/A. This helps testers track progress and identify which checks require immediate attention.</li>
+        <li><strong>Severity:</strong> An assessment of the potential impact if the vulnerability is exploited, typically aligned with the Common Vulnerability Scoring System (e.g., High, Medium, Low). If a numeric score is used, it should follow CVSS v3.1 or v4.0 standards.</li>
+        <li><strong>Notes:</strong> Additional context regarding specific implementation details, environmental dependencies, prerequisites, or observations made during the test execution that are not covered in the primary sections.</li>
+    </ul>
+  </main>
+  <script src="../js/script.js"></script>
+</body>
+</html>

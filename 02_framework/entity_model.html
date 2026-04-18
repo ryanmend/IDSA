@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2.1. Entity Model</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <button id="menu-toogle" class="menu-toggle" aria-label="Toggle Sidebar">☰ Menu</button>
+   <nav id="sidebar" class="sidebar">
+    <a href="../index.html">
+      <img src="../img/idsa_cover.png" alt="IDSA Home">
+    </a>
+    <h2>Table of Contents</h2>
+    <ol>
+      <li>
+        <a href="../01_introduction/01_introduction.html"><strong class="nav-link">Introduction</strong></a>
+      </li>
+      <li>
+        <a href="./02_framework.html"><strong class="nav-link">IoT Security Testing Framework</strong></a>
+        <ul>
+          <li class="active"><a href="./entity_model.html"><strong class="none">2.1. Entity Model</strong></a></li>
+          <li><a href="./threat_model.html">2.2. Threat Model</a></li>
+          <li><a href="./framework.html">2.3. Validation Framework</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="../03_catalogue/03_catalogue.html"><strong class="nav-link">Catalogue</strong></a>
+        <ul>
+          <li><a href="../03_catalogue/setup_threat_modelling.html">3.1. Setup & Threat Modelling</a></li>
+          <li><a href="../03_catalogue/network_api_wireless.html">3.2. Network, API & Wireless Testing</a></li>
+          <li><a href="../03_catalogue/firmware.html">3.3. Firmware Analysis</a></li>
+          <li><a href="../03_catalogue/device_hardware_os.html">3.4. Device Hardware & OS Security</a></li>
+          <li><a href="../03_catalogue/correlation_risk.html">3.5. Correlation & Risk Evaluation</a></li>
+          <li><a href="../03_catalogue/reporting_deliverables.html">3.6. Reporting & Deliverables</a></li>
+        </ul>
+      </li>
+    </ol>
+  </nav>
+  <main class="content">
+    <h1>2.1. Entity Model</h1>
+    
+    <p>This section establishes the foundational IoT device model, providing a structural blueprint of IoT architecture. Developing this model is a prerequisite for our proposed solution approach (see <a href="../01_introduction/README.md">1. Introduction</a>). Furthermore, this model serves as the structural basis for all subsequent stages of the framework, including <a href="./threat_model.html">Threat Modeling</a>, <a href="./framework.html">Framework</a>, and the <a href="../03_catalogue/README.md">Catalogue</a>.</p>
+
+    <h2>Device Model Scheme</h2>
+    <p>The device model integrates all previously described components into a unified architecture, as illustrated in the figure below. To maintain clarity, cardinalities are not explicitly shown; however, it should be noted that a single IoT device may contain multiple instances of any given component.</p>
+    
+    <figure>
+        <img src="../img/device_model_scheme_dark.png" alt="IoT Device Model">
+    </figure>
+
+    <p>Unlike existing models that treat sensors and actuators as independent components, this framework classifies them as physical, wireless, or user interfaces. This distinction is made because these elements serve as the primary conduits for interaction between internal device logic and external environments or users.</p>
+    
+    <p>In scenarios involving nested architectures—where a device contains sub-devices—the classification of an interface as "internal" or "external" is determined by the observer's perspective and the established architectural boundaries. Ultimately, this specialized model provides a high-fidelity, technology-agnostic method for representing diverse IoT hardware. By focusing strictly on the device’s internal composition, this model enables the development of detailed, standardized test cases applicable to any IoT implementation, regardless of its underlying protocols or standards.</p>
+
+    <h2>Architectural Boundaries</h2>
+    <p>To effectively conduct a security assessment, one must first establish the demarcation line between the IoT device and its surrounding ecosystem. For the purposes of this framework, the device boundary is defined by its physical enclosure. This enclosure serves as the literal partition between internal hardware/software elements and external environmental factors.</p>
+    
+    <p>While interfaces facilitate communication across this boundary, they are not considered part of the enclosure itself. Instead, interfaces are analyzed as distinct entities (refer to <a href="#interfaces">Interfaces</a>). In this model, any element or interface that can be independently targeted during a penetration test is classified as a "component."</p>
+
+    <h2>Components</h2>
+    <p>The device model utilizes a generalized taxonomy of parts known as "components." Each component represents a discrete piece of hardware or software that can be evaluated individually. Consequently, the scope of an IoT security audit is defined by the specific list of components identified for testing.</p>
+
+    <h3 id="internal-elements">Internal Elements</h3>
+    <p>Internal elements are the functional units contained within the device's physical housing. These typically include:</p>
+    <ul>
+        <li><strong>Firmware:</strong> The core logic and instruction sets embedded within the hardware. Firmware manages device operations and regulates data flow between internal and external points. It resides in non-volatile memory and is executed by the processor. Potential attack surfaces include the OS, RTOS, or bare-metal implementations.</li>
+        <li><strong>Network Data Services:</strong> These are functional sub-sets of the firmware designed to facilitate data exchange across interfaces (e.g., via network protocols or bus listeners). They act as the software logic for transmitting and receiving information.</li>
+    </ul>
+    <p><em>Note: While firmware update packages are critical to security, they are treated as external artifacts that can be analyzed independently; therefore, they are excluded from the "internal element" scope of this guide.</em></p>
+
+    <h2 id="interfaces">Interfaces</h2>
+    <p>Interfaces serve as the bridge between components. If an interface connects at least one internal element to another entity, it is considered within the device's scope. These are categorized by their communication type:</p>
+    <ul>
+        <li><strong>Physical (Machine-to-Machine):</strong> Hardwired connections requiring physical access to a port or socket on the enclosure. <em>Examples: USB, Ethernet.</em></li>
+        <li><strong>Wireless (Machine-to-Machine):</strong> Non-contact connections utilizing radio frequencies or optical signals, accessible from a distance. <em>Examples: Wi-Fi, Bluetooth/BLE, ZigBee.</em></li>
+        <li><strong>User Interfaces (Human-to-Machine):</strong> Channels designed for interaction between a human operator and the device. These may be physical (touchscreens) or remote (web applications). <em>Examples: Microphones, Cameras, Local Web UIs.</em></li>
+    </ul>
+  </main>
+  <script src="../js/script.js"></script>
+</body>
+</html>

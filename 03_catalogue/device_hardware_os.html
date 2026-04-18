@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Device Hardware & OS Security</title>
+   <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <button id="menu-top" class="menu-toggle" aria-label="Toggle Sidebar">☰ Menu</button>
+  <nav id="sidebar" class="sidebar">
+    <a href="../index.html">
+    <img src="../img/idsa_cover.png" alt="IDSA Home">
+    </a>
+    <h2>Table of Contents</h2>
+    <ol>
+      <li>
+        <a href="../01_introduction/01_introduction.html"><strong class="none">Introduction</strong></a>
+      </li>
+      <li>
+        <a href="../02_framework/02_framework.html"><strong class="none">IoT Security Testing Framework</strong></a>
+        <ul>
+          <li><a href="../02_framework/entity_model.html">2.1. Entity Model</a></li>
+          <li><a href="../02_framework/threat_model.html">2.2. Threat Model</a></li>
+          <li><a href="../02_framework/framework.html">2.3. Validation Framework</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="./03_catalogue.html"><strong class="none">Catalogue</strong></a>
+        <ul>
+          <li><a href="./setup_threat_modelling.html">3.1. Setup & Threat Modelling</a></li>
+          <li><a href="./network_api_wireless.html">3.2. Network, API & Wireless Testing</a></li>
+          <li><a href="./firmware.html">3.3. Firmware Analysis</a></li>
+          <li><a href="./device_hardware_os.html"><strong class="none">3.4. Device Hardware & OS Security</strong></a></li>
+          <li><a href="./correlation_risk.html">3.5. Correlation & Risk Evaluation</a></li>
+          <li><a href="./reporting_limiter.html">3.6. Reporting & Deliverables</a></li>
+        </ul>
+      </li>
+    </ol>
+  </nav>
+  <main class="content">
+  
+    <p>The following is the list of items required during the assessment:</p>
+    <p><code>Status</code> column can be set for values similar to "Pass", "Fail", "N/A".</p>
+    <p><code>Severity</code> column can be set for values "0-10" or "N/A" with 0 as the lowest to 10 being the highest potential magnitude of harm or damage if a risk event occurs (how bad). Refer to the <a href="../02_framework/framework.html">2.3. Validation Framework</a> for specific CVSS rating.</p>
+    
+    <h2 id="device-hardware-os-security">3.4 Device Hardware &amp; OS Security</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Test ID</th>
+      <th>Phase / Test Name</th>
+      <th>Status</th>
+      <th>Severity</th>
+      <th>Notes / Evidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>IDSA-OS-HARD-01</td>
+      <td>System Hardening (FR24)</td>
+      <td></td>
+      <td></td>
+      <td>Check RPi OS for default <code>pi</code> credentials and unnecessary services. Test Blink App UI for bypasses in lock screen or biometric auth.</td>
+    </tr>
+    <tr>
+      <td>IDSA-OS-CAM-01</td>
+      <td>Camera Subsystem Security (FR25)</td>
+      <td></td>
+      <td></td>
+      <td><strong>OpenCV:</strong> Attempt to hijack the stream via secondary scripts, inject pre-recorded video loops, and check <code>/dev/shm</code> or <code>/tmp</code> for leaked frames.</td>
+    </tr>
+    <tr>
+      <td>IDSA-PHYS-01</td>
+      <td>Physical Interface Attack Surface (FR26)</td>
+      <td></td>
+      <td></td>
+      <td><strong>USB Testing:</strong> Check if device mounts as storage/webcam; test for unauthorized serial shells; test if device can be spoofed as an <strong>HID (Keyboard)</strong> attack.</td>
+    </tr>
+  </tbody>
+</table>
+  </main>
+  <script src="../js/script.js"></script>
+</body>
+</html>
