@@ -153,6 +153,17 @@ tbody tr:hover {
   font-size: 1rem;
 }
 
+figure {
+  text-align: center;
+}
+
+.center-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%; /* Adjust as needed */
+}
+
 /* Responsive Design */
 @media (max-width: 850px) {
   .menu-toggle {
