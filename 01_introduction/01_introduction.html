@@ -7,61 +7,56 @@
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-
   <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Sidebar">☰ Menu</button>
-
-  <nav id="sidebar" class="sidebar">
-    <a href="../index.html">
-    <img src="../img/idsa_cover.png" alt="IDSA Home">
+   <nav id="sidebar" class="sidebar">
+    <a href="./index.html">
+      <img src="./img/idsa_cover.png" alt="IDSA Home">
     </a>
     <h2>Table of Contents</h2>
     <ol>
       <li>
-        <a href="../01_introduction/01_introduction.html"><strong>Introduction</strong></a>
+        <a href="./01_introduction/01_introduction.html"><strong>Introduction</strong></a>
       </li>
       <li>
-        <a href="../02_framework/02_framework.html"><strong>Testing Framework</strong></a>
+        <a href="./02_framework/02_framework.html"><strong>IoT Security Testing Framework</strong></a>
         <ul>
-          <li><a href="../02_framework/device_model.html">2.1. IoT Device Model</a></li>
-          <li><a href="../02_framework/threat_model.html">2.2. Threat Model</a></li>
-          <li><a href="../02_framework/methodology.html">2.3. Testing Methodology</a></li>
+          <li><a href="./02_framework/device_model.html">2.1. Entity Model</a></li>
+          <li><a href="./02_framework/threat_model.html">2.2. Threat Model</a></li>
+          <li><a href="./02_framework/methodology.html">2.3. Validation Framework</a></li>
         </ul>
       </li>
       <li>
-        <a href="../03_test_cases/03_test_cases.html"><strong>Test Case Catalog</strong></a>
+        <a href="./03_catalogue/03_catalogue.html"><strong>Catalogue</strong></a>
         <ul>
-          <li><a href="../03_test_cases/firmware.html">3.1. Firmware (IDSA-FW)</a></li>
-          <li><a href="../03_test_cases/network_data_services.html">3.2. Network Data Services (IDSA-NET)</a></li>
-          <li><a href="../03_test_cases/api_&_cloud_integration.html">3.3. API &amp; Cloud Integration (IDSA-API)</a></li>
-          <li><a href="../03_test_cases/physical_interfaces.html">3.4. Physical Interfaces (IDSA-PHYS)</a></li>
-          <li><a href="../03_test_cases/wireless_interfaces.html">3.5. Wireless Interfaces (IDSA-RF)</a></li>
-          <li><a href="../03_test_cases/os_&_user_interfaces.html">3.6. Operating System &amp; UI (IDSA-OS)</a></li>
+          <li><a href="./03_catalogue/setup_threat_modelling.html">3.1. Setup & Threat Modelling</a></li>
+          <li><a href="./03_catalogue/network_api_wireless.html">3.2. Network, API & Wireless Testing</a></li>
+          <li><a href="./03_catalogue/firmware.html">3.3. Firmware Analysis</a></li>
+          <li><a href="./03_catalogue/device_hardware_os.html">3.4. Device Hardware & OS Security</a></li>
+          <li><a href="./03_catalogue/correlation_risk.html">3.5. Correlation & Risk Evaluation</a></li>
+          <li><a href="./03_catalogue/reporting_deliverables.html">3.6. Reporting & Deliverables</a></li>
         </ul>
       </li>
     </ol>
   </nav>
-
   <main class="content">
     <h1>1. Introduction</h1>
+    
     <h2>Motivation</h2>
     <p>Our system addresses the security risks associated with the rapid expansion of IoT ecosystems, specifically how weaknesses in any of network communication, companion applications, and embedded firmware can expose users to privacy breaches and unauthorized access. There is no one, clearly structured resource that brings together all major attack surfaces of an IoT device specifically into one practical assessment workflow. Existing resources often focus on individual areas, such as network traffic, firmware, or mobile applications, in isolation as well as general security tips. This project addresses that gap by providing a unified, step-by-step framework that evaluates IoT security across all layers. As a result, the framework is useful both for IoT developers and makers preparing devices for production, as well as for consumers, integrators, or DIY users who want to verify that a device is securely configured before deployment or installation.</p>
+    
     <h2>Goals</h2>
-    <p>
-        The aim of this project is to design, develop, and validate a comprehensive IoT Security Assessment System capable of analyzing the security of consumer IoT devices across three critical dimensions:
-    </p>
-    <section>
+    <p>The aim of this project is to design, develop, and validate a comprehensive IoT Security Assessment System capable of analyzing the security of consumer IoT devices across three critical dimensions:</p>
     <ul>
         <li><strong>Network traffic analysis</strong></li>
         <li><strong>Web and API behaviour assessment</strong></li>
-        <li><strong>Firmware extraction and static analysis</strong></li>
+        <li><strong>Firmware extraction and static analysis</strong>
+        </li>
     </ul>
-    </section>
-    <p>
-        Achieving this aim requires not only the development of appropriate technical tools and methods but also a structured workflow that integrates findings across all layers to produce meaningful, actionable security insights.
-    </p>
+    <p>Achieving this aim requires not only the development of appropriate technical tools and methods but also a structured workflow that integrates findings across all layers to produce meaningful, actionable security insights.</p>
+    
     <h2>Intended Audience</h2>
     <p>Our IoT Device Security Assessment framework is mainly intended to be used by students, researchers, or practitioners can adopt. However, others might benefit from the concepts and test cases introduced in this guide as well.</p>
-   </main>
+  </main>
   <script src="../js/script.js"></script>
 </body>
 </html>
