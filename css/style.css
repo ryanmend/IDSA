@@ -164,6 +164,7 @@ figure {
   width: 50%; /* Adjust as needed */
 }
 
+
 /* Responsive Design */
 @media (max-width: 850px) {
   .menu-toggle {
