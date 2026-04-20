@@ -46,253 +46,289 @@
     <p>This IoT Device Security Assessment project presents the design and development aimed at evaluating the security posture of consumer Internet of Things (IoT) devices across network, application, and firmware layers. Motivated by the rapid expansion of IoT ecosystems and the corresponding rise in security risks, the project applies an evidence-driven methodology inspired by industry standards such as the OWASP IoT Top 10 and NIST guidelines. The assessment framework guides the structured analysis of device behaviour, cloud interactions, and internal software components, ultimately enabling a comprehensive understanding of vulnerabilities and their implications.</p>
     <p><img src="img/component_overview_dark.png" alt="Component Overview"></p>
     
-    <h1 id="catalogue">Catalogue</h1>
-    <p>The following is the list of items required during the assessment:</p>
-    <p><code>Status</code> column can be set for values similar to "Pass", "Fail", "N/A".</p>
-    <p><code>Severity</code> column can be set for values "0-10" or "N/A" with 0 as the lowest to 10 being the highest potential magnitude of harm or damage if a risk event occurs (how bad). Refer to the <a href="./02_framework/framework.html">2.3. Validation Framework</a> for specific CVSS rating.</p>
-    
-    <!-- 3.1 Setup & Threat Modelling -->
-    <h2 id="setup-threat-modelling">3.1 Setup &amp; Threat Modelling</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Test ID</th>
-          <th>Phase / Test Name</th>
-          <th>Status</th>
-          <th>Severity</th>
-          <th>Notes / Evidence</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>IDSA-SETUP-01</td>
-          <td>Device Selection &amp; Inventory (FR1, FR2)</td>
-          <td></td>
-          <td></td>
-          <td>Record device specs, hardware version, and identify exposed boot logs or hardware implementation details.</td>
-        </tr>
-        <tr>
-          <td>IDSA-MODEL-01</td>
-          <td>IoT Threat Model (FR4, FR5)</td>
-          <td></td>
-          <td></td>
-          <td>Map all identified attack vectors (USB, Wi-Fi, Cloud API, Physical) to the threat model.</td>
-        </tr>
-        <tr>
-          <td>IDSA-MODEL-02</td>
-          <td>Visual Threat Diagram (FR6)</td>
-          <td></td>
-          <td></td>
-          <td>Confirm diagram shows all attack surfaces including RPi, Blink App, and Cloud Endpoints.</td>
-        </tr>
-        <tr>
-          <td>IDSA-MODEL-03</td>
-          <td>Threat Impact Rating (FR7)</td>
-          <td></td>
-          <td></td>
-          <td>Assign likelihood/impact scores to identified threats based on technical exploitability.</td>
-        </tr>
-      </tbody>
-    </table>
+    <style>
+  /* Makes the input fields blend into the table seamlessly */
+  table input[type="text"] {
+    width: 100%;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+    text-align: center; /* Centers the text like a standard table cell */
+  }
 
-    <!-- 3.2 Network, API & Wireless Testing -->
-    <h2 id="network-api-wireless">3.2 Network, API &amp; Wireless Testing</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Test ID</th>
-          <th>Phase / Test Name</th>
-          <th>Status</th>
-          <th>Severity</th>
-          <th>Notes / Evidence</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>IDSA-NET-SCAN-01</td>
-          <td>Service Discovery &amp; Info (FR3, FR12, FRND)</td>
-          <td></td>
-          <td></td>
-          <td><strong>Nmap:</strong> Enumerate open ports, service versions, and OS fingerprints. Use <strong>NSE scripts</strong> to check for known CVEs on identified services.</td>
-        </tr>
-        <tr>
-          <td>IDSA-NET-STRM-01</td>
-          <td>Traffic Encryption (FR8, FR9, FR10)</td>
-          <td></td>
-          <td></td>
-          <td><strong>Wireshark:</strong> Verify WebRTC/Blink stream encryption. Monitor Wi-Fi for unencrypted PII; use <strong>Foremost</strong> to attempt image recovery from captured packets.</td>
-        </tr>
-        <tr>
-          <td>IDSA-NET-RF-01</td>
-          <td>Wireless Interface Security (FR14)</td>
-          <td></td>
-          <td></td>
-          <td><strong>Wireshark:</strong> Analyze WPA2/3 handshakes. Perform de-authentication tests to check if the camera fails insecurely or stops recording during jamming.</td>
-        </tr>
-        <tr>
-          <td>IDSA-API-TEST-01</td>
-          <td>API Interception &amp; Auth (FR15, FR16)</td>
-          <td></td>
-          <td></td>
-          <td><strong>Burp Suite:</strong> Intercept API traffic for authentication testing and input manipulation via Repeater and Intruder.</td>
-        </tr>
-        <tr>
-          <td>IDSA-API-FUZZ-01</td>
-          <td>API Fuzzing &amp; Pattern Logging (FR17, FR18)</td>
-          <td></td>
-          <td></td>
-          <td>Run fuzzing on endpoints; test Blink App login for <strong>rate limiting</strong> and brute-force resistance.</td>
-        </tr>
-      </tbody>
-    </table>
+  /* Adds a subtle highlight when clicking to type */
+  table input[type="text"]:focus {
+    background-color: #f0f8ff;
+    border-bottom: 1px solid #007bff;
+  }
 
-    <!-- 3.3 Firmware Analysis -->
-    <h2 id="firmware-analysis">3.3 Firmware Analysis</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Test ID</th>
-          <th>Phase / Test Name</th>
-          <th>Status</th>
-          <th>Severity</th>
-          <th>Notes / Evidence</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>IDSA-FW-ACQ-01</td>
-          <td>Acquisition &amp; Backup (FR19, FR21)</td>
-          <td></td>
-          <td></td>
-          <td>Verify firmware is saved; analyze Blink updates via App and capture RPi boot logs.</td>
-        </tr>
-        <tr>
-          <td>IDSA-FW-EXTRACT-01</td>
-          <td>Extraction &amp; Binwalk (FR20)</td>
-          <td></td>
-          <td></td>
-          <td>Use <strong>Binwalk</strong> on RPi filesystem and EEPROM to extract files and identify disclosure of source code or binaries.</td>
-        </tr>
-        <tr>
-          <td>IDSA-FW-SCRT-01</td>
-          <td>Secrets &amp; Hardcoded Keys (FR22)</td>
-          <td></td>
-          <td></td>
-          <td>Search extracted files for hardcoded keys/passwords. Check <code>/etc/</code> and config files for unencrypted secrets and local Blink caches.</td>
-        </tr>
-        <tr>
-          <td>IDSA-FW-CONF-01</td>
-          <td>Insecure Configs &amp; Libraries (FR23)</td>
-          <td></td>
-          <td></td>
-          <td>Check <code>apt</code> packages on RPi for outdated software. Evaluate security of the update mechanism (B/App vs. <code>sudo apt full-upgrade</code>).</td>
-        </tr>
-      </tbody>
-    </table>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+  }
 
-    <!-- 3.4 Device Hardware & OS Security -->
-    <h2 id="device-hardware-os">3.4 Device Hardware &amp; OS Security</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Test ID</th>
-          <th>Phase / Test Name</th>
-          <th>Status</th>
-          <th>Severity</th>
-          <th>Notes / Evidence</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>IDSA-OS-HARD-01</td>
-          <td>System Hardening (FR24)</td>
-          <td></td>
-          <td></td>
-          <td>Check RPi OS for default <code>pi</code> credentials and unnecessary services. Test Blink App UI for bypasses in lock screen or biometric auth.</td>
-        </tr>
-        <tr>
-          <td>IDSA-OS-CAM-01</td>
-          <td>Camera Subsystem Security (FR25)</td>
-          <td></td>
-          <td></td>
-          <td><strong>OpenCV:</strong> Attempt to hijack the stream via secondary scripts, inject pre-recorded video loops, and check <code>/dev/shm</code> or <code>/tmp</code> for leaked frames.</td>
-        </tr>
-        <tr>
-          <td>IDSA-PHYS-01</td>
-          <td>Physical Interface Attack Surface (FR26)</td>
-          <td></td>
-          <td></td>
-          <td><strong>USB Testing:</strong> Check if device mounts as storage/webcam; test for unauthorized serial shells; test if device can be spoofed as an <strong>HID (Keyboard)</strong> attack.</td>
-        </tr>
-      </tbody>
-    </table>
+  th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
 
-    <!-- 3.5 Correlation & Risk Evaluation -->
-    <h2 id="correlation-risk-evaluation">3.5 Correlation &amp; Risk Evaluation</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Test ID</th>
-          <th>Phase / Test Name</th>
-          <th>Status</th>
-          <th>Severity</th>
-          <th>Notes / Evidence</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>IDSA-CORR-01</td>
-          <td>Vulnerability Correlation (FR25, FR26)</td>
-          <td></td>
-          <td></td>
-          <td>Cross-reference network findings (e.g., open ports) with firmware findings (e.g., outdated packages).</td>
-        </tr>
-        <tr>
-          <td>IDSA-RISK-01</td>
-          <td>Risk Matrix &amp; Severity (FR27, FR28)</td>
-          <td></td>
-          <td></td>
-          <td>Map all identified vulnerabilities to a risk matrix.</td>
-        </tr>
-        <tr>
-          <td>IDSA-MITIG-01</td>
-          <td>Mitigation Recommendations (FR29)</td>
-          <td></td>
-          <td></td>
-          <td>Develop NIST and FIRST (CVSS) fix strategies for all identified risks.</td>
-        </tr>
-      </tbody>
-    </table>
+  th {
+    background-color: #f2f2f2;
+  }
+</style>
 
-    <!-- 3.6 Reporting & Deliverables -->
-    <h2 id="reporting-deliverables">3.6 Reporting &amp; Deliverables</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Test ID</th>
-          <th>Phase / Test Name</th>
-          <th>Status</th>
-          <th>Severity</th>
-          <th>Notes / Evidence</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>IDSA-REPT-01</td>
-          <td>Technical Report Compilation (FR30, FR32)</td>
-          <td></td>
-          <td></td>
-          <td>Final report containing Nmap logs, Wireshark captures, Binwalk extractions, and OpenCV screenshots.</td>
-        </tr>
-        <tr>
-          <td>IDSA-REPT-02</td>
-          <td>Executive Summary &amp; Presentation (FR31)</td>
-          <td></td>
-          <td></td>
-          <td>Prepare non-technical summary of hardware/software risks for stakeholders.</td>
-        </tr>
-      </tbody>
-    </table>
+<h1 id="catalogue">Catalogue</h1>
+<p>The following is the list of items required during the assessment:</p>
+<p><code class="status-guide">Status</code> column can be set for values similar to "Pass", "Fail", "N/A".</p>
+<p><code class="severity-guide">Severity</code> column can be set for values "0-10" or "N/A" with 0 as the lowest to 10 being the highest potential magnitude of harm or damage if a risk event occurs (how bad). Refer to the <a href="./02_framework/framework.html">2.3. Validation Framework</a> for specific CVSS rating.</p>
+
+<!-- 3.1 Setup & Threat Modelling -->
+<h2 id="setup-threat-modelling">3.1 Setup &amp; Threat Modelling</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Test ID</th>
+      <th>Phase / Test Name</th>
+      <th>Status</th>
+      <th>Severity</th>
+      <th>Notes / Evidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>IDSA-SETUP-01</td>
+      <td>Device Selection &amp; Inventory (FR1, FR2)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td>Record device specs, hardware version, and identify exposed boot logs or hardware implementation details.</td>
+    </tr>
+    <tr>
+      <td>IDSA-MODEL-01</td>
+      <td>IoT Threat Model (FR4, FR5)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="</strong>text" placeholder="0-10"></td>
+      <td>Map all identified attack vectors (USB, Wi-Fi, Cloud API, Physical) to the threat model.</td>
+    </tr>
+    <tr>
+      <td>IDSA-MODEL-02</td>
+      <td>Visual Threat Diagram (FR6)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td>Confirm diagram shows all attack surfaces including RPi, Blink App, and Cloud Endpoints.</td>
+    </tr>
+    <tr>
+      <td>IDSA-MODEL-03</td>
+      <td>Threat Impact Rating (FR7)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td>Assign likelihood/impact scores to identified threats based on technical exploitability.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 3.2 Network, API & Wireless Testing -->
+<h2 id="network-api-wireless">3.2 Network, API &amp; Wireless Testing</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Test ID</th>
+      <th>Phase / Test Name</th>
+      <th>Status</th>
+      <th>Severity</th>
+      <th>Notes / Evidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>IDSA-NET-SCAN-01</td>
+      <td>Service Discovery &amp; Info (FR3, FR12, FRND)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td><strong style="color: #d9534f;">Nmap:</strong> Enumerate open ports, service versions, and OS fingerprints. Use <strong style="color: #d9534f;">NSE scripts</strong> to check for known CVEs on identified services.</td>
+    </tr>
+    <tr>
+      <td>IDSA-NET-STRM-01</td>
+      <td>Traffic Encryption (FR8, FR9, FR10)</td>
+      <td><input type="text" placeholder="Pass/</strong>Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td><strong style="color: #d9534f;">Wireshark:</strong> Verify WebRTC/Blink stream encryption. Monitor Wi-Fi for unencrypted PII; use <strong style="color: #d9534f;">Foremost</strong> to attempt image recovery from captured packets.</td>
+    </tr>
+    <tr>
+      <td>IDSA-NET-RF-01</td>
+      <td>Wireless Interface Security (FR14)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-</strong>10"></td>
+      <td><strong style="color: #d9534f;">Wireshark:</strong> Analyze WPA2/3 handshakes. Perform de-authentication tests to check if the camera fails insecurely or stops recording during jamming.</td>
+    </tr>
+    <tr>
+      <td>IDSA-API-TEST-01</td>
+      <td>API Interception &amp; Auth (FR15, FR16)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td><strong style="color: #d9534f;">Burp Suite:</strong> Intercept API traffic for authentication testing and input manipulation via Repeater and Intruder.</td>
+    </tr>
+    <tr>
+      <td>IDSA-API-FUZZ-01</td>
+      <td>API Fuzzing &amp; Pattern Logging (FR17, FR18)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td>Run fuzzing on endpoints; test Blink App login for <strong style="color: #d9534f;">rate limiting</strong> and brute-force resistance.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 3.3 Firmware Analysis -->
+<h2 id="firmware-analysis">3.3 Firmware Analysis</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Test ID</th>
+      <th>Phase / Test Name</th>
+      <th>Status</th>
+      <th>Severity</th>
+      <th>Notes / Evidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>IDSA-FW-ACQ-01</td>
+      <td>Acquisition &amp; Backup (FR19, FR21)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td>Verify firmware is saved; analyze Blink updates via App and capture RPi boot logs.</td>
+    </strong></tr>
+    <tr>
+      <td>IDSA-FW-EXTRACT-01</td>
+      <td>Extraction &amp; Binwalk (FR20)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td>Use <strong style="color: #d9534f;">Binwalk</strong> on RPi filesystem and EEPROM to extract files and identify disclosure of source code or binaries.</td>
+    </tr>
+    <tr>
+      <td>IDSA-FW-SCRT-01</td>
+      <td>Secrets &amp; Hardcoded Keys (FR22)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td>Search extracted files for hardcoded keys/passwords. Check <code>/etc/</code> and config files for unencrypted secrets and local Blink caches.</td>
+    </tr>
+    <tr>
+      <td>IDSA-FW-CONF-01</td>
+      <td>Insecure Configs &amp; Libraries (FR23)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td>Check <code>apt</code> packages on RPi for outdated software. Evaluate security of the update mechanism (B/App vs. <code>sudo apt full-</strong>upgrade</code>).</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 3.4 Device Hardware & OS Security -->
+<h2 id="device-hardware-os">3.4 Device Hardware &amp; OS Security</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Test ID</th>
+      <th>Phase / Test Name</th>
+      <th>Status</th>
+      <th>Severity</th>
+      <th>Notes / Evidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>IDSA-OS-HARD-01</td>
+      <td>System Hardening (FR24)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td>Check RPi OS for default <code>pi</code> credentials and unnecessary services. Test Blink App UI for bypasses in lock screen or biometric auth.</td>
+    </tr>
+    <tr>
+      <td>IDSA-OS-CAM-01</td>
+      <td>Camera Subsystem Security (FR25)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td><strong style="color: #d9534f;">OpenCV:</strong> Attempt to hijack the stream via secondary scripts, inject pre-recorded video loops, and check <code>/dev/shm</code> or <code>/tmp</code> for leaked frames.</td>
+    </tr>
+    <tr>
+      <td>IDSA-PHYS-01</td>
+      <td>Physical Interface Attack Surface (FR26)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td><strong style="color: #d9534f;">USB Testing:</strong> Check if device mounts as storage/webcam; test for unauthorized serial shells; test if device can be spoofed as an <strong style="color: #d9534f;">HID (Keyboard)</strong> attack.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 3.5 Correlation & Risk Evaluation -->
+<h2 id="correlation-risk-evaluation">3.5 Correlation &amp; Risk Evaluation</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Test ID</th>
+      <th>Phase / Test Name</th>
+      <th>Status</th>
+      <th>Severity</th>
+      <th>Notes / Evidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>IDSA-CORR-01</td>
+      <td>Vulnerability Correlation (FR25, FR2<strong>6)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td>Cross-reference network findings (e.g., open ports) with firmware findings (e.g., outdated packages).</td>
+    </tr>
+    <tr>
+      <td>IDSA-RISK-01</td>
+      <td>Risk Matrix &amp; Severity (FR27, FR28)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td>Map all identified vulnerabilities to a risk matrix.</td>
+    </tr>
+    <tr>
+      <td>IDSA-MITIG-01</td>
+      <td>Mitigation Recommendations (FR29)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td>Develop NIST and FIRST (CVSS) fix strategies for all identified risks.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 3.6 Reporting & Deliverables -->
+<h2 id="reporting-deliverables">3.6 Reporting &amp; Deliverables</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Test ID</th>
+      <th>Phase / Test Name</th>
+      <th>Status</th>
+      <th>Severity</th>
+      <th>Notes / Evidence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>IDSA-REPT-01</td>
+      <td>Technical Report Compilation (FR30, FR32)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td>Final report containing Nmap logs, Wireshark captures, Binwalk extractions, and OpenCV screenshots.</td>
+    </tr>
+    <tr>
+      <td>IDSA-REPT-02</td>
+      <td>Executive Summary &amp; Presentation (FR31)</td>
+      <td><input type="text" placeholder="Pass/Fail"></td>
+      <td><input type="text" placeholder="0-10"></td>
+      <td>Prepare non-technical summary of hardware/software risks for stakeholders.</td>
+    </tr>
+  </tbody>
+</table>
 
     <h2 id="project-collaborators-and-acknowledgements">Project Collaborators and Acknowledgements</h2>
     <p>We sincerely thank Professor Mandeep Pannu for her mentorship. Her expertise in IoT security, strategic guidance on our presentation, and constant encouragement were fundamental to the success of this assessment framework.</p>
